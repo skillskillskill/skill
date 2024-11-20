@@ -1,0 +1,32 @@
+name: Django CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Run black check
+        run: poetry run black . --check
+
+      - name: Run isort check
+        run: poetry run isort . --check-only
+
+      - name: Run Mypy
+        run: poetry run mypy .
