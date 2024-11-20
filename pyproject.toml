@@ -16,11 +16,19 @@ mypy = "^1.13.0"
 coverage = "^7.6.7"
 django-crispy-forms = "^2.3"
 crispy-bootstrap4 = "^2024.10"
+django-stubs = "^5.1.1"
 
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^1.13.0"
 django-stubs = "^5.1.1"
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+
+[tool.django-stubs]
+django_settings_module = "config.settings"
+
 
 [build-system]
 requires = ["poetry-core"]
