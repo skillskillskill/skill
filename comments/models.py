@@ -22,11 +22,11 @@ class Comment(models.Model):
     category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
     # 댓글 삭제 여부 표시
     is_delete = models.BooleanField(default=False)
-    #대댓글 구현을 위한 자기 참조, 선택적
+    # 대댓글 구현을 위한 자기 참조, 선택적
     parent_id = models.ForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True
     )
 
-    #객체의 문자열 표현
+    # 객체의 문자열 표현
     def __str__(self):
         return f"Comment {self.comment_id} by {self.author_id.user_name}"

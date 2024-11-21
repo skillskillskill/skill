@@ -9,13 +9,11 @@ class UserCreationForm(forms.ModelForm):
     password1 = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
     password2 = forms.CharField(label="비밀번호 확인", widget=forms.PasswordInput)
 
-
     class Meta:
         # 이 폼이 사용할 Django 모델 지정
         model = User
         # 폼에서 편집 가능한 필드 명시
         fields = ("user_name", "email")
-
 
     def clean_password2(self):
         # cleaned_date : 폼 유효성 검사 후 정제된 데이터를 담은 딕셔너리
