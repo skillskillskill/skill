@@ -25,3 +25,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.slug
+
+    def get_like_count(self):
+        """이 게시물 좋아요 수를 반환합니다"""
+        return self.like_set.count()
+
+    def is_liked_by(self, user):
+        """주어진 사용자가 이 게시물을 좋아요 했는지 확인합니다"""
+        return self.like_set.filter(author_id=user).exists()
