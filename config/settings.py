@@ -43,8 +43,11 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",  # crispy-forms 를 Tailwind CS와 함께 사용하는 경우
     # Local apps
-    "blog",
-    "accounts",
+    "users",
+    "posts",
+    "comments",
+    "likes",
+    "categories",
 ]
 
 MIDDLEWARE = [
@@ -141,3 +144,6 @@ MARKDOWNX_UPLOAD_MAX_SIZE = 50 * 1024 * 1024  # 50MB - 최대 업로드 크기
 MARKDOWNX_MEDIA_PATH = "markdownx/"  # 미디어 파일 저장 경로
 MARKDOWNX_URLS_PATH = "/markdownx/markdownify/"  # Markdownx URL 경로
 MARKDOWNX_UPLOAD_URLS_PATH = "/markdownx/upload/"  # 업로드 URL 경로
+
+
+AUTH_USER_MODEL = "users.User"

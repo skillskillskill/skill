@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+    <h2>{{ user.user_name }}님의 프로필</h2>
+    <p>이메일 : {{ user.email }}</p>
+    <a href="{% url 'user_update' %}" class="btn btn-secondary">프로필 수정</a>
+{% endblock %}
