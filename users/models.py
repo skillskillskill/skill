@@ -59,6 +59,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # 사용자 생성 시 필수 입력 필드
     REQUIRED_FIELDS = ["user_name", "nickname", "password"]
 
+    class Meta:
+        verbose_name = "user"
+        verbose_name_plural = "users"
+
     def __str__(self):
         return self.email
 

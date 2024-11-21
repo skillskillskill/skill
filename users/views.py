@@ -1,5 +1,6 @@
-from django.contrib.auth import login, logout
-from django.contrib.auth.views import LoginView
+from lib2to3.fixes.fix_input import context
+
+from django.contrib.auth import get_user_model, login, logout
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView
@@ -7,9 +8,9 @@ from django.views.generic import ListView
 from posts.models import Post
 
 from .forms import UserCreationForm, UserUpdateForm
-from .models import User
 
 # Create your views here.
+User = get_user_model()
 
 
 class HomeView(ListView):
@@ -26,8 +27,9 @@ class SignUpView(View):
     def get(self, request):
         # UserCreationForm 인스턴스 생성
         form = UserCreationForm()
+        context = {"form": form}
         # signup.html 템플릿에 폼을 전달하여 렌더링
-        return render(request, "users/signup.html", {"form": form})
+        return render(request, "signup.html", context)
 
     def post(self, request):
         # POST 데이터로 UserCreationForm 인스턴스 생성
@@ -40,14 +42,16 @@ class SignUpView(View):
             login(request, user)
             # 홈페이지로 리다이렉트
             return redirect("home")
+        context = {"form": form}
         # 폼이 유효하지 않으면 에러와 함께 폼을 다시 표시
-        return render(request, "users/signup.html", {"form": form})
+        return render(request, "login.html", context)
 
 
 # Django의 기본 LoginView를 상속받아 커스텀 로그인 뷰 생성
-class UserLoginView(LoginView):
+class UserLoginView(View):
     # 사용할 로그인 템플릿 저장
-    template_name = "users/templates/registration/login.html"
+    def get(self, request):
+        return render(request, "login.html")
 
 
 # 로그아웃 처리 함수
@@ -62,9 +66,10 @@ def user_logout(request):
 class UserProfileView(View):
     def get(self, request, user_name):
         # 주어진 user_name 으로 사용자 객체 조회
-        user = User.objects.get(user_name=user_name)
+        user = User.objects.get(user_name=User.user_name)
+        context = {"user": user}
         # project.html 템플릿에 사용자 정보를 전달하여 렌더링
-        return render(request, "users/profile.html", {"user": user})
+        return render(request, context)
 
 
 # 사용자 정보 수정하는 뷰
@@ -73,18 +78,21 @@ class UserUpdateView(View):
     def get(self, request):
         # 현재 로그인한 사용자 정보로 UserUpdateForm 인스턴스 생성
         form = UserUpdateForm(instance=request.user)
+        context = {"form": form}
         # update.html 템플릿에 폼을 전달하여 렌더링
-        return render(request, "users/update.html", {"form": form})
+        return render(request, context)
 
     # POST 요청 처리: 수정된 정보를 처리
     def post(self, request):
         # POST 데이터와 현재 사용자 인스턴스로 UserUpdateForm 생성
         form = UserUpdateForm(request.POST, instance=request.user)
+        context = {"form": form}
         # 폼 데이터가 유효한지 검증
         if form.is_valid():
             # 유효하다면 변경사항 저장
             form.save()
             # 수정된 프로필 페이지로 리다이렉트
             return redirect("user_profile", user_name=request.user.user_name)
+
         # 폼이 유효하지 않으면 에러와 함께 폼을 다시 표시
-        return render(request, "users/update.html", {"form": form})
+        return render(request, context)
