@@ -8,10 +8,12 @@ from users.models import User
 class Post(models.Model):
     # 게시글 고유 식별자
     post_id = models.BigAutoField(primary_key=True)
+    # 게시글 제목
+    title = models.CharField(max_length=200)
     # 게시물 컨텐츠
     content = models.TextField()
     # 게시물 URL 슬러그
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100)
     # 게시물 조회수
     view_count = models.IntegerField(default=0)
     # 게시물 작성 날짜 및 시간

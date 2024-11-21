@@ -24,6 +24,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", HomeView.as_view(), name="home"),
     path("users/", include("users.urls")),
-    path("posts/", include("posts.urls")),
-    path("likes/", include("likes.urls")),
+    # path("posts/", include("posts.urls")),
+    # path("likes/", include("likes.urls")),
 ]
