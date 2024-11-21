@@ -47,7 +47,7 @@ class SignUpView(View):
 # Django의 기본 LoginView를 상속받아 커스텀 로그인 뷰 생성
 class UserLoginView(LoginView):
     # 사용할 로그인 템플릿 저장
-    template_name = "users/login.html"
+    template_name = "users/templates/registration/login.html"
 
 
 # 로그아웃 처리 함수
