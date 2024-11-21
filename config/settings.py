@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 from typing import List
 
@@ -147,3 +148,7 @@ MARKDOWNX_UPLOAD_URLS_PATH = "/markdownx/upload/"  # 업로드 URL 경로
 
 
 AUTH_USER_MODEL = "users.User"
+
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
