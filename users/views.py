@@ -1,13 +1,13 @@
 from lib2to3.fixes.fix_input import context
 
-from django.contrib.auth import get_user_model, login, logout, authenticate
+from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView
 
 from posts.models import Post
 
-from .forms import UserCreationForm, UserUpdateForm, UserLoginForm
+from .forms import UserCreationForm, UserLoginForm, UserUpdateForm
 
 # Create your views here.
 User = get_user_model()

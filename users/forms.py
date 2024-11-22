@@ -35,6 +35,7 @@ class UserCreationForm(forms.ModelForm):
             user.save()
         return user
 
+
 class UserLoginForm(forms.Form):
     username = forms.CharField(label="사용자명", max_length=150)
     password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
