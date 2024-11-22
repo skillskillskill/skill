@@ -1,13 +1,13 @@
 from lib2to3.fixes.fix_input import context
 
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.shortcuts import redirect, render
 from django.views import View
 from django.views.generic import ListView
 
 from posts.models import Post
 
-from .forms import UserCreationForm, UserUpdateForm
+from .forms import UserCreationForm, UserUpdateForm, UserLoginForm
 
 # Create your views here.
 User = get_user_model()
@@ -52,6 +52,20 @@ class UserLoginView(View):
     # 사용할 로그인 템플릿 저장
     def get(self, request):
         return render(request, "login.html")
+
+    def post(self, request):
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("home")  # 로그인 후 리디렉션할 URL 이름
+            else:
+                form.add_error(None, "사용자명 또는 비밀번호가 올바르지 않습니다.")
+
+        return render(request, "login.html", {"form": form})
 
 
 # 로그아웃 처리 함수

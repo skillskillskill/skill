@@ -12,12 +12,10 @@
         {% load crispy_forms_tags %}
         <form method="post">
             {% csrf_token %}
-
             {{ form|crispy }}
             <button type="submit" class="btn btn-primary">Login</button>
-            <button type="submit" class="btn btn-primary" onclick="location.href='users/signup'">Signup</button>
+             <a href="/../users/signup/" class="btn btn-primary">Signup</a>
         </form>
-
     </div>
 </body>
 </html>

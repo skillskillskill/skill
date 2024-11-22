@@ -13,7 +13,7 @@ class UserCreationForm(forms.ModelForm):
         # 이 폼이 사용할 Django 모델 지정
         model = User
         # 폼에서 편집 가능한 필드 명시
-        fields = ("user_name", "email")
+        fields = ("user_name", "email", "nickname")
 
     def clean_password2(self):
         # cleaned_date : 폼 유효성 검사 후 정제된 데이터를 담은 딕셔너리
@@ -34,6 +34,21 @@ class UserCreationForm(forms.ModelForm):
             # 데이터베이스에 최종 저장
             user.save()
         return user
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(label="사용자명", max_length=150)
+    password = forms.CharField(label="비밀번호", widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get("username")
+        password = cleaned_data.get("password")
+
+        if username and password:
+            # 여기서 추가적인 유효성 검사를 수행할 수 있습니다.
+            pass
+
+        return cleaned_data
 
 
 class UserUpdateForm(forms.ModelForm):
